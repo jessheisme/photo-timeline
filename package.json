@@ -24,13 +24,13 @@
     "lodash": "^4.17.11",
     "polished": "^2.3.1",
     "prop-types": "^15.6.2",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
+    "react": "^16.7.0-alpha.2",
+    "react-dom": "^16.7.0-alpha.2",
     "react-redux": "^6.0.0",
     "redux": "^4.0.1",
     "styled-components": "^4.1.2",
     "webpack": "^4.27.1",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.10"
+    "webpack-dev-server": "^3.1.14"
   }
 }
