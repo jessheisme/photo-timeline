@@ -9,8 +9,18 @@ export const color = {
   white: '#ffffff',
 };
 
+export const size = {
+  TINY: 4,
+  SMALL: 8,
+  NORMAL: 14,
+  MEDIUM: 16,
+  LARGE: 24,
+  XLARGE: 36,
+}
+
 const theme = {
-  color,  
+  color,
+  size,
 };
 
 export default theme;

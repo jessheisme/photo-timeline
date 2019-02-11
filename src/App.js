@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { darken } from 'polished';
 import { alignCenter } from './mixins';
+import Components from './panels/Components';
 
 const APP_WIDTH = 800;
 const APP_HEIGHT = 600;
@@ -30,7 +31,7 @@ class App extends React.Component {
     return (
       <Wrapper>
         <AppContainer>
-          Hello React
+          <Components />
         </AppContainer>
       </Wrapper>
     );
