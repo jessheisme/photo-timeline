@@ -1,41 +1,35 @@
 import React from 'react';
 import styled from 'styled-components';
 import { darken } from 'polished';
-import { alignCenter } from './mixins';
-import Components from './panels/Components';
+import { alignCenter, absoluteFill } from './mixins';
+import generateUseLayout from './core/layout/hooks/generateUseLayout';
+import layoutConfig, { panels } from './config/layoutConfig';
+import useWindowSize from './hooks/useWindowSize';
+import SideBar from './panels/SideBar';
+import MainContent from './panels/MainContent';
 
-const APP_WIDTH = 800;
-const APP_HEIGHT = 600;
-
-const Wrapper = styled.div`
-  ${alignCenter()}
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  width: 100%;
-  height: 100%;
-  background-color: ${({ theme }) => darken(0.1, theme.color.primaryBackground) };
-`;
 
 const AppContainer = styled.div`
-  ${alignCenter()}
-  position: relative;
-  width: ${APP_WIDTH}px;
-  height: ${APP_HEIGHT}px;
-  background-color: ${({ theme }) => theme.color.primaryBackground };
-  border-radius: 6px;
+  ${absoluteFill()}
 `
 
-class App extends React.Component {
-  render() {
-    return (
-      <Wrapper>
-        <AppContainer>
-          <Components />
-        </AppContainer>
-      </Wrapper>
-    );
-  }
+const useLayout = generateUseLayout(layoutConfig);
+
+const App = () => {
+  const windowSize = useWindowSize();
+  const { layout, isPanelOpen, togglePanel } = useLayout({ parentSize: windowSize });
+  return (
+      <AppContainer>
+        <SideBar
+          layout={layout[panels.SIDE_BAR]}
+          disableTransitions={windowSize.isResizing}
+        />
+        <MainContent
+          layout={layout[panels.MAIN_CONTENT]}
+          disableTransitions={windowSize.isResizing}
+        />
+      </AppContainer>
+  );
 }
 
 export default App;

@@ -18,9 +18,21 @@ export const size = {
   XLARGE: 36,
 }
 
+export const transition = '0.5s cubic-bezier(.4,0,0,1)';
+
+export const panelStyle = () => css`
+  background-color: ${color.primaryBackground};
+  transform: translateZ(0);
+  box-shadow:
+    inset 0px -1px 2px 0px ${rgba(color.white, 0.08)},
+    0px 4px 8px 0px ${rgba(color.black, 0.4)};
+`
+
+
 const theme = {
   color,
   size,
+  transition,
 };
 
 export default theme;
