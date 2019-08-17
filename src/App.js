@@ -1,31 +1,74 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
-import { absoluteFill } from './mixins';
 import generateUseLayout from './core/layout/hooks/generateUseLayout';
 import useProject from './core/frameio/hooks/useProject';
 import useFolderChildren from './core/frameio/hooks/useFolderChildren';
 import layoutConfig, { panels } from './config/layoutConfig';
 import useWindowSize from './hooks/useWindowSize';
 import Splash from './components/Splash';
+import Icon from './components/Icon';
 import SideBar from './panels/SideBar';
 import Collection from './panels/Collection';
-import { size } from './theme';
+import { absoluteFill, alignCenter } from './mixins';
+import { size, color, transition } from './theme';
 
 const PROJECT_ID = '05288114-98ab-4ba7-a124-22e4fbb72811';
 
 const SIDE_BAR_WIDTH = 260;
+
+const MINI_SIDE_BAR_WIDTH = size.XLARGE;
+
+const SMALL_SCREEN_WIDTH = 500;
 
 const AppContainer = styled.div`
   ${absoluteFill()}
   overflow: hidden;
 `
 
-const SideBarContainer = styled.div`
+const MiniSideBar = styled.div`
   position: absolute;
   left: 0px;
   top: 0px;
   bottom: 0px;
-  width: ${SIDE_BAR_WIDTH}px;
+  width: 0px;
+  overflow: hidden;
+  cursor: pointer;
+  background-color: ${color.white};
+  transition: all ${transition};
+  color: ${color.gray300};
+  &:hover {
+    color: ${color.black};
+  }
+  @media only screen and (max-width: ${SMALL_SCREEN_WIDTH}px) {
+    width: ${MINI_SIDE_BAR_WIDTH}px;
+  }
+`
+
+const MenuIconContainer = styled.div`
+  position: relative;
+  width: ${size.XLARGE}px;
+  height: ${size.XLARGE}px;
+  ${alignCenter()}
+  cursor: pointer;
+`
+
+const SideBarContainer = styled.div`
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  @media only screen and (min-width: ${SMALL_SCREEN_WIDTH + 1}px) {
+    left: 0px;
+    width: ${SIDE_BAR_WIDTH}px;
+  }
+  @media only screen and (max-width: ${SMALL_SCREEN_WIDTH}px) {
+    left: ${MINI_SIDE_BAR_WIDTH}px;
+    right: 0px;
+    z-index: 10;
+    ${p => !p.isOpen && `
+      opacity: 0;
+      pointer-events: none;
+    `}
+  }
 `
 
 const CollectionContainer = styled.div`
@@ -34,6 +77,9 @@ const CollectionContainer = styled.div`
   top: 0px;
   bottom: 0px;
   right: 0px;
+  @media only screen and (max-width: ${SMALL_SCREEN_WIDTH}px) {
+    left: ${MINI_SIDE_BAR_WIDTH}px;
+  }
 `
 
 const useLayout = generateUseLayout(layoutConfig);
@@ -51,6 +97,8 @@ const App = () => {
 
   const collectionLength = collections.current.length;
 
+  const [sideBarOpen, setSideBarOpen] = useState(false);
+
   // Select First Collection
   useEffect(() => {
     if (!selectedCollectionId && collectionLength > 0) {
@@ -62,14 +110,34 @@ const App = () => {
     return collections.current.filter(collection => collection.id === selectedCollectionId)[0];
   }, [selectedCollectionId]);
 
+  const menuIcon = sideBarOpen ? 'x' : 'menu';
+
+  const selectCollection = (collectionId) => {
+    setSelectedCollectionId(collectionId)
+    setTimeout(() => {
+      setSideBarOpen(false);
+    }, 0);
+  }
+
   return (
       <AppContainer>
-        <SideBarContainer>
+        <MiniSideBar
+          onClick={() => {
+            setSideBarOpen(!sideBarOpen);
+          }}
+        >
+          <MenuIconContainer>
+            <Icon icon={menuIcon} size={size.LARGE} />
+          </MenuIconContainer>
+        </MiniSideBar>
+        <SideBarContainer
+          isOpen={sideBarOpen}
+        >
           <SideBar
             isLoaded={!!selectedCollectionId}
             selectedCollectionId={selectedCollectionId}
             collections={collections.current}
-            selectCollection={setSelectedCollectionId}
+            selectCollection={selectCollection}
           />
         </SideBarContainer>
         <CollectionContainer>

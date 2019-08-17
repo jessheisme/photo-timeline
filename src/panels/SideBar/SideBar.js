@@ -14,6 +14,7 @@ const Header = styled.div`
   position: relative;
   ${font.HEADER_M(color.black)};
   margin-bottom: ${size.LARGE}px;
+  user-select: none;
 `
 
 const HeaderTop = styled.div`

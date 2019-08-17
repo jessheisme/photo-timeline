@@ -4,6 +4,7 @@ import { rgba } from 'polished';
 import useFolderChildren from '../../core/frameio/hooks/useFolderChildren';
 import useModal from '../../hooks/useModal';
 import usePersistance from '../../hooks/usePersistance';
+import useMeasure from '../../hooks/useMeasure';
 import Grid from '../../components/Grid';
 import Modal from '../../components/Modal';
 import AssetViewer from '../../components/AssetViewer';
@@ -44,9 +45,10 @@ const XContainer = styled.div`
 const Collection = (props) => {
   const {
     windowSize,
-    width,
     collection,
   } = props;
+
+  const [containerRef, containerRect] = useMeasure();
 
   const collectionAssets = useFolderChildren(collection && collection.id);
 
@@ -61,11 +63,11 @@ const Collection = (props) => {
   }
 
   return (
-    <Container>
+    <Container ref={containerRef}>
       <Grid
         id={collection && collection.id}
         windowSize={windowSize}
-        width={width}
+        width={containerRect.width}
         columns={2}
         items={collectionAssets.current}
         selectedItemId={selectedItemId}
