@@ -146,8 +146,7 @@ const Grid = (props) => {
 
         const x = (i % columns) * itemWidth;
         const yStagger = (i % columns) * (itemHeight / 2);
-        const initialY = initialLoad ? 20 : 0;
-        const y = Math.floor((i / columns)) * itemHeight + yStagger + initialY;
+        const y = Math.floor((i / columns)) * itemHeight + yStagger;
 
         const isSelected = selectedItemId === item.id;
 
@@ -177,27 +176,27 @@ const Grid = (props) => {
                 transform: `translate3d(${x}px, ${y}px, 0px)`,
               }}
             />
-          { ReactDOM.createPortal(
-            <ItemContainer
-              onClick={() => onItemSelect(item.id)}
-              key={item.id}
-              style={{
-                width: rect.width,
-                height: rect.height,
-                transform: `translate3d(${rect.x}px, ${rect.y}px, 0px)`,
-                ...!isSelected && { pointerEvents: 'none' },
-                opacity: initialLoad ? 0 : 1,
-                zIndex: rect.zIndex,
-                ...!finalLoad && {
-                  transition: `all 0.4s ease-out`,
-                  transitionDelay: `${i * 80}ms`,
-                }
-              }}
-            >
-              { renderItem(item, { width: itemWidth, height: itemHeight }) }
-            </ItemContainer>,
-            document.body
-          )}
+            { ReactDOM.createPortal(
+              <ItemContainer
+                onClick={() => onItemSelect(item.id)}
+                key={item.id}
+                style={{
+                  width: rect.width,
+                  height: rect.height,
+                  transform: `translate3d(${rect.x}px, ${rect.y}px, 0px)`,
+                  ...!isSelected && { pointerEvents: 'none' },
+                  opacity: initialLoad ? 0 : 1,
+                  zIndex: rect.zIndex,
+                  ...!finalLoad && {
+                    transition: `opacity 0.4s ease-out`,
+                    transitionDelay: `${i * 80}ms`,
+                  }
+                }}
+              >
+                { renderItem(item, { width: itemWidth, height: itemHeight }) }
+              </ItemContainer>,
+              document.body
+            )}
           </React.Fragment>
         )
       })}
