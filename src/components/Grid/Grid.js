@@ -13,7 +13,7 @@ const LIGHTBOX_MARGIN = size.XLARGE;
 const Container = styled.div`
   ${absoluteFill()};
   overflow: scroll;
-  
+  -webkit-overflow-scrolling: touch;
 `
 
 const ItemContainer = styled.div`
@@ -103,7 +103,7 @@ const Grid = (props) => {
       clearTimeout(finalLoadTimeout.current)
       finalLoadTimeout.current = setTimeout(() => {
         setFinalLoad(true);
-      }, 1000)
+      }, 2000)
     }, 1000)
   }, [id])
 
