@@ -72,9 +72,6 @@ const Grid = (props) => {
   const [initialLoad, setInitialLoad] = useState(true);
   const initialLoadTimeout = useRef(null);
 
-  const [finalLoad, setFinalLoad] = useState(false);
-  const finalLoadTimeout = useRef(null);
-
   const itemKeys = useMemo(() => {
     return items.map(item => item.id);
   }, [items]);
@@ -95,15 +92,9 @@ const Grid = (props) => {
 
   useEffect(() => {
     setInitialLoad(true);
-    setFinalLoad(false);
     clearTimeout(initialLoadTimeout.current)
-    clearTimeout(finalLoadTimeout.current)
     initialLoadTimeout.current = setTimeout(() => {
       setInitialLoad(false);
-      clearTimeout(finalLoadTimeout.current)
-      finalLoadTimeout.current = setTimeout(() => {
-        setFinalLoad(true);
-      }, 2000)
     }, 1000)
   }, [id])
 
@@ -187,10 +178,8 @@ const Grid = (props) => {
                   ...!isSelected && { pointerEvents: 'none' },
                   opacity: initialLoad ? 0 : 1,
                   zIndex: rect.zIndex,
-                  ...!finalLoad && {
-                    transition: `opacity 0.4s ease-out`,
-                    transitionDelay: `${i * 80}ms`,
-                  }
+                  transition: `opacity 0.4s ease-out`,
+                  transitionDelay: `${i * 80}ms`,
                 }}
               >
                 { renderItem(item, { width: itemWidth, height: itemHeight }) }
