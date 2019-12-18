@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
-import generateUseLayout from './core/layout/hooks/generateUseLayout';
+import config from './core/frameio/config';
 import useProject from './core/frameio/hooks/useProject';
 import useFolderChildren from './core/frameio/hooks/useFolderChildren';
-import layoutConfig, { panels } from './config/layoutConfig';
 import useWindowSize from './hooks/useWindowSize';
 import Splash from './components/Splash';
 import Icon from './components/Icon';
@@ -11,8 +10,6 @@ import SideBar from './panels/SideBar';
 import Collection from './panels/Collection';
 import { absoluteFill, alignCenter } from './mixins';
 import { size, color, transition } from './theme';
-
-const PROJECT_ID = '05288114-98ab-4ba7-a124-22e4fbb72811';
 
 const SIDE_BAR_WIDTH = 260;
 
@@ -82,14 +79,11 @@ const CollectionContainer = styled.div`
   }
 `
 
-const useLayout = generateUseLayout(layoutConfig);
-
 const App = () => {
 
   const windowSize = useWindowSize();
-  const app = useLayout({ parentSize: windowSize });
 
-  const project = useProject(PROJECT_ID);
+  const project = useProject(config.projectId);
 
   const collections = useFolderChildren(project.current && project.current.root_asset_id);
 
@@ -98,6 +92,8 @@ const App = () => {
   const collectionLength = collections.current.length;
 
   const [sideBarOpen, setSideBarOpen] = useState(false);
+
+  console.log(project)
 
   // Select First Collection
   useEffect(() => {

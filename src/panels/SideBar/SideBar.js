@@ -111,7 +111,7 @@ const SideBar = (props) => {
             transitionDelay: `${headerTopDelay}ms`,
           }}
         >
-          LOVE
+          MY
         </HeaderTop>
         <HeaderBottom
           style={{
@@ -122,7 +122,7 @@ const SideBar = (props) => {
             transitionDelay: `${headerBottomDelay}ms`,
           }}
         >
-          EXPOSURE
+          PORTFOLIO
         </HeaderBottom>
       </Header>  
       <Content>
@@ -162,8 +162,8 @@ const SideBar = (props) => {
         })}
       </Content>
       <Footer>
-        <InstaLink target="_blank" href="https://www.instagram.com/_johntraver/">
-          @_johntraver 2019
+        <InstaLink target="_blank" href="https://www.instagram.com/myportfolio">
+          @_myportfolio 2019
         </InstaLink>
       </Footer>
     </Container>

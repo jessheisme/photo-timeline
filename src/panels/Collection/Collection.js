@@ -1,15 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import useFolderChildren from '../../core/frameio/hooks/useFolderChildren';
-import useModal from '../../hooks/useModal';
-import usePersistance from '../../hooks/usePersistance';
 import useMeasure from '../../hooks/useMeasure';
 import Grid from '../../components/Grid';
-import Modal from '../../components/Modal';
-import AssetViewer from '../../components/AssetViewer';
 import { absoluteFill, alignCenter } from '../../mixins';
-import { size, color, transition } from '../../theme';
+import { size, color } from '../../theme';
 
 const Container = styled.div`
   ${absoluteFill()}
@@ -23,23 +19,6 @@ const ItemContainer = styled.div`
   background-position: center;
   background-repeat: no-repeat;
   box-shadow: inset 0px 0px 0px 2px ${color.white};
-`
-
-const LightBoxContainer = styled.div`
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  background-color: ${rgba(color.white, 0.6)};
-`
-
-const XContainer = styled.div`
-  position: absolute;
-  right: 0px;
-  top: 0px;
-  width: ${size.XLARGE}px;
-  height: ${size.XLARGE}px;
-  ${alignCenter()};
-  cursor: pointer;
 `
 
 const Collection = (props) => {

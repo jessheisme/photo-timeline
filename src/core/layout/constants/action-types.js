@@ -1,7 +1,0 @@
-
-
-export const UPDATE_LAYOUT = 'UPDATE_LAYOUT';
-
-export const TOGGLE_LAYOUT = 'TOGGLE_LAYOUT';
-
-export const TOGGLE_PANEL = 'TOGGLE_PANEL';
