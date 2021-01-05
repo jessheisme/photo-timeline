@@ -34,7 +34,7 @@
     "webpack-dev-server": "^3.1.14"
   },
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "copy-webpack-plugin": "^5.1.1",
     "feather-icons-react": "^0.3.2",
     "phoenix": "^1.4.9",
